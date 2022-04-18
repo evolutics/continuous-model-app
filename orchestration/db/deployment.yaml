@@ -17,3 +17,5 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               value: mysecretpassword
+          ports:
+            - containerPort: 5432
