@@ -18,5 +18,4 @@ replacements:
           delimiter: ":"
           index: 1
 resources:
-  - deployment.yaml
-  - service.yaml
+  - web
