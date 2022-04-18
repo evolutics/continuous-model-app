@@ -19,3 +19,4 @@ replacements:
           index: 1
 resources:
   - deployment.yaml
+  - service.yaml

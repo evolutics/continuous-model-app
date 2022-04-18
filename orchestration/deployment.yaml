@@ -14,3 +14,5 @@ spec:
       containers:
         - name: main
           image: nigelpoulton/k8sbook:placeholder
+          ports:
+            - containerPort: 8080
