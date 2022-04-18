@@ -13,6 +13,6 @@ spec:
     spec:
       containers:
         - name: main
-          image: nigelpoulton/k8sbook:placeholder
+          image: web:placeholder
           ports:
             - containerPort: 8080
