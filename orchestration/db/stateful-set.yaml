@@ -1,11 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: db
 spec:
   selector:
     matchLabels:
       app: db
+  serviceName: db
   template:
     metadata:
       labels:

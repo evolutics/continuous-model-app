@@ -5,6 +5,7 @@ metadata:
   labels:
     app: db
 spec:
+  clusterIP: None
   ports:
     - port: 5432
   selector:
