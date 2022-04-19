@@ -4,6 +4,8 @@ configMapGenerator:
   - name: environment-variables
     envs:
       - variables.env
+generatorOptions:
+  disableNameSuffixHash: true
 replacements:
   - source:
       kind: ConfigMap
