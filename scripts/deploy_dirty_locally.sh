@@ -10,6 +10,10 @@ main() {
 
   export APP_VERSION="${RANDOM}"
 
+  if ! minikube status; then
+    minikube start
+  fi
+
   # shellcheck disable=SC2046
   eval $(minikube docker-env)
   scripts/build.sh
