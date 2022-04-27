@@ -1,12 +1,27 @@
 import flask
 import markupsafe
+import psycopg
 
 app = flask.Flask(__name__)
 
 
 @app.route("/")
 def go():
-    return _render_status(is_ok=True, details="…")
+    try:
+        with psycopg.connect(
+            "dbname=postgres host=db password=mysecretpassword user=postgres"
+        ) as connection, connection.cursor() as cursor:
+            cursor.execute(
+                """CREATE TABLE IF NOT EXISTS visit (
+                    visited_at timestamp DEFAULT current_timestamp)"""
+            )
+
+            cursor.execute("INSERT INTO visit DEFAULT VALUES")
+            counts = cursor.execute("SELECT count(*) FROM visit").fetchone()[0]
+
+            return _render_status(is_ok=True, details=f"This is visit #{counts}.")
+    except Exception as exception:
+        return _render_status(is_ok=False, details=str(exception))
 
 
 def _render_status(*, is_ok, details):
