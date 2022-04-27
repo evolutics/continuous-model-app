@@ -1,0 +1,11 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+metadata:
+  name: continuous-model-app
+build:
+  artifacts:
+    - image: web
+deploy:
+  kustomize:
+    paths:
+      - orchestration
