@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: main
-          image: postgres:14.2
+          image: postgres:14.2-alpine
           env:
             - name: POSTGRES_PASSWORD
               value: mysecretpassword
