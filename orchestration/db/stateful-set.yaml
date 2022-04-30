@@ -18,5 +18,23 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               value: mysecretpassword
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - "/bin/bash"
+                  - "-c"
+                  - |
+                    pg_dumpall --quote-all-identifiers --username postgres \
+                      | sed --expression \
+                        's/^\(CREATE ROLE "postgres";\)$/-- \1/' \
+                      > /docker-entrypoint-initdb.d/dump.sql
           ports:
             - containerPort: 5432
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: db
