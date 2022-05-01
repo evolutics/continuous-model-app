@@ -10,8 +10,7 @@ build_test_deploy_virtually() {
   IP="${vm_ip}" vagrant up
 
   local -r kubeconfig_file="${PWD}/.kubeconfig/staging"
-  scripts/provision.sh --ip "${vm_ip}" \
-    --local-path "${kubeconfig_file}" \
+  k3sup install --ip "${vm_ip}" --local-path "${kubeconfig_file}" \
     --ssh-key .vagrant/machines/default/virtualbox/private_key --user vagrant
 
   echo 'TODO: Keep forward to registry: vagrant ssh -- -R 5000:localhost:5000'
