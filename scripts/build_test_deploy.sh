@@ -17,8 +17,7 @@ build_test_deploy_virtually() {
   echo 'TODO: Keep forward to registry: vagrant ssh -- -R 5000:localhost:5000'
   read -r
 
-  skaffold run --default-repo localhost:5000 \
-    --kubeconfig "${PWD}/.kubeconfig/${environment}"
+  skaffold run --kubeconfig "${PWD}/.kubeconfig/${environment}"
 
   scripts/smoke_test.sh "${vm_ip}"
   scripts/acceptance_test.sh "${vm_ip}"

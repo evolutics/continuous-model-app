@@ -4,7 +4,7 @@ metadata:
   name: continuous-model-app
 build:
   artifacts:
-    - image: web
+    - image: localhost:5000/web
 deploy:
   kustomize:
     paths:
