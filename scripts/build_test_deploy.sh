@@ -13,8 +13,7 @@ build_test_deploy_virtually() {
   k3sup install --ip "${vm_ip}" --local-path "${kubeconfig_file}" \
     --ssh-key .vagrant/machines/default/virtualbox/private_key --user vagrant
 
-  echo 'TODO: Keep forward to registry: vagrant ssh -- -R 5000:localhost:5000'
-  read -r
+  remind_of_registry_forward 'staging'
 
   skaffold run --kubeconfig "${kubeconfig_file}"
 
@@ -22,9 +21,15 @@ build_test_deploy_virtually() {
   scripts/acceptance_test.sh "${vm_ip}"
 }
 
+remind_of_registry_forward() {
+  echo "TODO: Forward $1 to registry: vagrant ssh -- -R 5000:localhost:5000"
+  read -r
+}
+
 deploy_test_production() {
-  # TODO: Deploy, then smoke test.
-  echo 'TODO'
+  remind_of_registry_forward 'production'
+  skaffold run --kubeconfig "${PWD}/.kubeconfig/production"
+  scripts/smoke_test.sh '192.168.62.62'
 }
 
 main() {
