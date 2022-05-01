@@ -10,7 +10,7 @@ build_test_deploy_virtually() {
   IP="${vm_ip}" vagrant up
 
   local -r environment="$1"
-  scripts/provision.sh --context "${environment}" --ip "${vm_ip}" \
+  scripts/provision.sh --ip "${vm_ip}" \
     --local-path .kubeconfig/"${environment}" \
     --ssh-key .vagrant/machines/default/virtualbox/private_key --user vagrant
 
@@ -18,7 +18,6 @@ build_test_deploy_virtually() {
   read -r
 
   skaffold run --default-repo localhost:5000 \
-    --kube-context "${environment}" \
     --kubeconfig "${PWD}/.kubeconfig/${environment}"
 
   scripts/smoke_test.sh "${vm_ip}"
