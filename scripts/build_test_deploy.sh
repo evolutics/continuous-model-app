@@ -9,15 +9,15 @@ build_test_deploy_virtually() {
   local -r vm_ip='192.168.63.63'
   IP="${vm_ip}" vagrant up
 
-  local -r environment="$1"
+  local -r kubeconfig_file="${PWD}/.kubeconfig/staging"
   scripts/provision.sh --ip "${vm_ip}" \
-    --local-path .kubeconfig/"${environment}" \
+    --local-path "${kubeconfig_file}" \
     --ssh-key .vagrant/machines/default/virtualbox/private_key --user vagrant
 
   echo 'TODO: Keep forward to registry: vagrant ssh -- -R 5000:localhost:5000'
   read -r
 
-  skaffold run --kubeconfig "${PWD}/.kubeconfig/${environment}"
+  skaffold run --kubeconfig "${kubeconfig_file}"
 
   scripts/smoke_test.sh "${vm_ip}"
   scripts/acceptance_test.sh "${vm_ip}"
@@ -33,7 +33,7 @@ main() {
   cd "$(dirname "${script_folder}")"
 
   scripts/basic_test.sh
-  build_test_deploy_virtually staging
+  build_test_deploy_virtually
   deploy_test_production
 }
 
