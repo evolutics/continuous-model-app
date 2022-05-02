@@ -10,9 +10,8 @@ build_test_deploy_virtually() {
   IP="${vm_ip}" vagrant up
 
   local -r kubeconfig_file="${PWD}/.kubeconfig/staging"
-  k3sup install --ip "${vm_ip}" --local-path "${kubeconfig_file}" \
-    --ssh-key .vagrant/machines/default/virtualbox/private_key --user vagrant
-
+  vagrant ssh --command 'sudo cat /etc/rancher/k3s/k3s.yaml' \
+    | sed "s/127\.0\.0\.1/${vm_ip}/g" >"${kubeconfig_file}"
   remind_of_registry_forward 'staging'
 
   skaffold run --kubeconfig "${kubeconfig_file}"
