@@ -35,7 +35,7 @@ main() {
   local -r script_folder="$(dirname "$(readlink --canonicalize "$0")")"
   cd "$(dirname "${script_folder}")"
 
-  scripts/basic_test.sh
+  scripts/base_test.sh
   build_test_deploy_virtually
   deploy_test_production
 }
