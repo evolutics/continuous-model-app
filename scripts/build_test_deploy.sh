@@ -14,7 +14,8 @@ build_test_deploy_virtually() {
     | sed "s/127\.0\.0\.1/${vm_ip}/g" >"${kubeconfig_file}"
   remind_of_registry_forward 'staging'
 
-  skaffold run --kubeconfig "${kubeconfig_file}"
+  skaffold build --file-output build.json --kubeconfig "${kubeconfig_file}"
+  skaffold deploy --build-artifacts build.json --kubeconfig "${kubeconfig_file}"
 
   scripts/smoke_test.sh "${vm_ip}"
   scripts/acceptance_test.sh "${vm_ip}"
@@ -27,7 +28,8 @@ remind_of_registry_forward() {
 
 deploy_test_production() {
   remind_of_registry_forward 'production'
-  skaffold run --kubeconfig "${PWD}/.kubeconfig/production"
+  skaffold deploy --build-artifacts build.json \
+    --kubeconfig "${PWD}/.kubeconfig/production"
   scripts/smoke_test.sh '192.168.62.62'
 }
 
