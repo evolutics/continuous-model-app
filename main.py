@@ -1,4 +1,5 @@
 import flask
+import http
 import markupsafe
 import psycopg
 
@@ -21,7 +22,10 @@ def go():
 
             return _render_status(is_ok=True, details=f"This is visit #{counts}.")
     except Exception as exception:
-        return _render_status(is_ok=False, details=str(exception))
+        return (
+            _render_status(is_ok=False, details=str(exception)),
+            http.HTTPStatus.INTERNAL_SERVER_ERROR,
+        )
 
 
 def _render_status(*, is_ok, details):
