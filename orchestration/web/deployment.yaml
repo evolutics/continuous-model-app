@@ -13,6 +13,6 @@ spec:
     spec:
       containers:
         - name: main
-          image: localhost:5000/web
+          image: web
           ports:
             - containerPort: 8080
