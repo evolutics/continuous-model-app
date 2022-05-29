@@ -1,6 +1,6 @@
 {
   "production": {
-    "public_ip": "192.168.63.63",
+    "ip_address": "192.168.63.63",
     "ssh_host": "default"
   }
 }
